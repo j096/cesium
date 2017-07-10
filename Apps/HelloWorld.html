@@ -1,0 +1,487 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+<!-- Use correct character set. -->
+<meta charset="utf-8">
+<!-- Tell IE to use the latest, best version. -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="../Source/Bootstrap/js/bootstrap.js"></script>
+<link href="../Source/Bootstrap/css/bootstrap.css" rel="stylesheet">
+<script src="../Build/Cesium/Cesium.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+google.charts.load('current', {'packages':['bar']});
+var flag;	// 4층, 5층 띄워져있는지 true, false
+	  function drawChart(id,value) {
+		  
+		  var d=[['계절', '최소', '최대']];
+		  d.push(value[0]);
+		  d.push(value[1]);
+		  d.push(value[2]);
+		  d.push(value[3]);
+	        var data = google.visualization.arrayToDataTable(d);
+
+	        var options = {
+	          chart: {
+	            title: 'Company Performance',
+	            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+	          }
+	        };
+
+	        var chart = new google.charts.Bar(document.getElementById(id));
+
+	        chart.draw(data, google.charts.Bar.convertOptions(options));
+	      }
+
+
+   google.charts.load('current', {'packages':['gauge']});
+	   function drawChart2(id) {
+
+	        var data = google.visualization.arrayToDataTable([
+	          ['Label', 'Value'],
+	          ['Memory', 80],
+	          ['CPU', 55],
+	          ['Network', 68]
+	        ]);
+
+	        var options = {
+	          width: 400, height: 120,
+	          greenFrom:50, greenTo:75,
+	          yellowFrom:75, yellowTo: 90,
+	          redFrom: 90, redTo: 200,
+	          minorTicks: 5
+	        };
+
+	        var chart = new google.visualization.Gauge(document.getElementById(id));
+
+	        chart.draw(data, options);
+
+	        setInterval(function() {
+	          data.setValue(0, 1, 140 + Math.round(60 * Math.random()));
+	          chart.draw(data, options);
+	        }, 13000);
+	        setInterval(function() {
+	          data.setValue(1, 1, 140 + Math.round(60 * Math.random()));
+	          chart.draw(data, options);
+	        }, 5000);
+	        setInterval(function() {
+	          data.setValue(2, 1, 160 + Math.round(20 * Math.random()));
+	          chart.draw(data, options);
+	        }, 26000);
+	      }
+
+var value = [ [ ] ,
+	["공간정보기술(1층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 196, 241], ["여름", 221, 314] , ["가을", 206, 225 ], ["겨울", 214, 310] ]],
+	["공간정보기술(2층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 183, 250], ["여름", 218, 330] , ["가을", 192, 244 ], ["겨울", 199, 285] ]],
+	["공간정보기술(3층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",300,[["봄", 169, 224], ["여름", 236, 33] , ["가을", 198, 221  ], ["겨울",192, 287] ]],
+	["공간정보기술(4층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",400,[["봄", 185, 227], ["여름", 231, 302] , ["가을", 204, 223 ], ["겨울", 185, 302] ]],
+	["공간정보기술(5층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["공간정보기술(6층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",0,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["건물 A","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["건물 B","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["건물 C","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",300,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["건물 D","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
+	["건물 E","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]]
+	
+	
+	];
+
+function cameraMove() {
+	viewer.camera.flyTo({
+      destination : Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 550.0),
+	  //orientation : Cesium.HeadingPitchRoll.fromDegrees(32.27879878293835,-28.34390550872461,0.0716951918898415),
+      duration : 1.0
+    }); 
+	};
+	
+	function hideFloor() {
+		if (!flag)
+		{
+			model[4].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 40.0));
+			model[5].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 40.0));
+		}
+		else {
+			model[4].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 0.0));
+			model[5].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 0.0));
+		}
+		flag = !flag;
+	}
+	
+	function hideBar() {
+		document.getElementById('controlPanel').style.visibility = 'hidden';
+	}
+	function hideBar2() {
+		document.getElementById('full').style.visibility = 'hidden';
+	}
+	function showBar() {
+		document.getElementById('controlPanel').style.visibility = 'visible';
+	}
+	
+	function showBar2(value) {
+		document.getElementById('full').style.visibility = 'visible';
+		//document.getElementById('name').innerHTML=value[0];
+		//document.getElementById('addr').innerHTML=value[1];
+		document.getElementById('information').style.visibility = 'visible';
+		$("#name").html(value[0]);
+		$("#address").html(value[1]);
+		$("#contact").html(value[2]);
+		$("#site").html(value[3]);
+		$("#usage").html(value[4]);
+		   drawChart("graph2", value[5]);
+		   drawChart2("graph1");
+	}
+	
+	 function ColorByUsage() {
+    for(i=1;i<=11;i++){
+	 model[i-1].color = getColor(viewModel.color, viewModel.alpha,value[i][4]);
+      model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
+      model[i-1].colorBlendAmount = parseFloat(viewModel.colorBlendAmount);
+      model[i-1].silhouetteColor = getColor(viewModel.silhouetteColor, viewModel.silhouetteAlpha,value[i][4]);
+    }
+  }
+
+  function ori() {
+    for(i=1;i<=11;i++){
+      model[i-1].color = getColor(viewModel.color, viewModel.alpha,0);
+      model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
+      model[i-1].colorBlendAmount = 0.5;
+      model[i-1].silhouetteColor = getColor(viewModel.color, viewModel.alpha,0);
+    }
+  }
+	
+</script>
+<style>
+#icon {
+	padding-top: 0px;
+	height: 21px;
+	width: 21px;
+}
+</style>
+<style>
+@import url(../Build/Cesium/Widgets/widgets.css);
+
+#cesiumContainer {
+	width: 100%;
+	height:100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	margin-top: 55px;
+
+}
+
+#controlPanel {
+	color: white;
+	position: absolute;
+	top: 10%;
+	left: 5px;
+	background: rgba(42, 42, 42, 0.8);
+	padding: 5px 8px;
+	border-radius: 5px;
+}
+
+#full {
+	color: white;
+	position: absolute;
+	top: 250px;
+	left: 5px;
+	background: rgba(42, 42, 42, 0.8);
+	padding: 5px 8px;
+	border-radius: 5px;
+}
+
+</style>
+</head>
+
+<body>
+	<header class="navbar navbar-bright navbar-fixed-top" role="banner">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"> <img id="icon" alt="Brand"
+						src="../favicon.ico">
+					</a> <a id="brand" class="navbar-brand" href="#">Smart Building
+						Management</a>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+	</header>
+
+ <div id="cesiumContainer" class = "fullSize"></div>
+
+  <div id="controlPanel">
+  This is a floating control panel<br/>
+  with a translucent background color.
+  <p>
+  <label>
+  <input id="skyCheckbox" type="checkbox" checked />
+  <span>Enable atmospheric effect</span>
+  </label><br/>
+  <button class="cesium-button" onclick="cameraMove()">fly to building</button>
+  <button class="cesium-button" onclick="hideFloor()">floor moving</button>
+  <button class="cesium-button" onclick="ColorByUsage()">Color By Usage</button>
+  <button class="cesium-button" onclick="ori()">Original</button>
+ 
+  
+  </p>
+  
+  
+  
+  </div>
+  
+  
+  
+  <div id="full">  
+		<div id="graph1" style="width: 400px; height: 120px;"></div>
+		<div id="graph2" style="width: 400px; height: 300px;"></div>
+      <div id="information">
+      <img alt="img" src="http://nyulangone.org/files/science-building-artists-rendering.jpg"  style="width:150px; height:150px; float:right;"></img>
+  건물명(층) : <span id="name"> </span>
+  <br>
+  주소: <span id="address"> </span> 
+  <br>
+  연락처: <span id="contact"> </span> 
+  <br>
+  홈페이지: <a href="#" id="site"> </a> 
+  <br>
+  사용량: <span id="usage"> </span> 
+  </div>
+  </div>
+    
+	<script>
+	var obj;
+		var viewer = new Cesium.Viewer('cesiumContainer');
+		var scene = viewer.scene;
+
+		var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+			Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 0.0));
+		
+		var model = {};
+		flag = false;
+		
+		 function getColorBlendMode(colorBlendMode) {
+        return Cesium.ColorBlendMode[colorBlendMode.toUpperCase()];
+    }
+
+    function getColor(colorName, alpha, value) {
+
+      var color ;
+      if(value == 0){
+        color = Cesium.Color["WHITE"];
+      }else if(value <= 100){
+        color = Cesium.Color["YELLOW"];
+      }else if(value <=200){
+        color = Cesium.Color["RED"];
+      }else if(value <=300){
+         color = Cesium.Color["BLUE"];
+      }else if(value <=400){
+        color = Cesium.Color["GREEN"];
+      }
+        return Cesium.Color.fromAlpha(color, parseFloat(alpha));
+    }
+
+    // The viewModel tracks the state of our mini application.
+    var viewModel = {
+
+        color : 'Green',//default
+        colors : ['White', 'Red', 'Green', 'Blue', 'Yellow', 'Gray'],
+        alpha : 1.0,
+        colorBlendMode : 'Highlight',
+        colorBlendModes : ['Highlight', 'Replace', 'Mix'],
+        colorBlendAmount : 0.5,
+        colorBlendAmountEnabled : false,
+        silhouetteColor : 'Red',//defalut
+        silhouetteColors : ['Red', 'Green', 'Blue', 'Yellow', 'Gray'],
+        silhouetteAlpha : 1.0,
+        silhouetteSize : 2.0
+    };
+		
+		for (i=1; i<=11; i++) {
+			addr = "../Source/Features/" + i + '.glb';
+			idx = i;
+			model[i-1] = scene.primitives.add(Cesium.Model.fromGltf({
+				url : addr,
+				modelMatrix : modelMatrix,
+				scale : 1.0,
+				id:idx,
+		
+			}));
+			
+		}
+		hideBar2();
+
+		handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+				handler.setInputAction(function(click) {
+					var pickedObject = viewer.scene.pick(click.position);
+					console.log("click " + pickedObject.id + value[9][4]);
+					showBar2(value[pickedObject.id]);
+					
+			
+				}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+				
+				
+		////
+		var nameOverlay = document.createElement('div');
+    viewer.container.appendChild(nameOverlay);
+    nameOverlay.className = 'backdrop';
+    nameOverlay.style.display = 'none';
+    nameOverlay.style.position = 'absolute';
+    nameOverlay.style.bottom = '0';
+    nameOverlay.style.left = '0';
+    nameOverlay.style['pointer-events'] = 'none';
+    nameOverlay.style.padding = '4px';
+    nameOverlay.style.backgroundColor = 'white';
+
+
+    // Information about the currently selected feature
+    var selected = {
+        feature: undefined,
+        originalColor: new Cesium.Color()
+    };
+
+    // Information about the currently highlighted feature
+    var highlighted = {
+        feature: undefined,
+        originalColor: new Cesium.Color()
+    };
+var selectedEntity = new Cesium.Entity();
+
+viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(movement) {
+// If a feature was previously highlighted, undo the highlight
+if (Cesium.defined(highlighted.feature)) {
+    highlighted.feature.color = highlighted.originalColor;
+    highlighted.feature = undefined;
+}
+
+// Pick a new feature
+var pickedFeature = viewer.scene.pick(movement.endPosition);
+if (pickedFeature==undefined) {
+    nameOverlay.style.display = 'none';
+    return;
+}
+
+// A feature was picked, so show it's overlay content
+nameOverlay.style.display = 'block';
+nameOverlay.style.bottom = viewer.canvas.clientHeight - movement.endPosition.y + 'px';
+nameOverlay.style.left = movement.endPosition.x + 'px';
+nameOverlay.textContent = value[pickedFeature.id][0];
+
+}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+////move keyboard
+
+		var canvas = viewer.canvas;
+		canvas.setAttribute('tabindex', '0'); // needed to put focus on the canvas
+		var ellipsoid = scene.globe.ellipsoid;
+		scene.screenSpaceCameraController.enableTranslate = false;
+		
+		var flags = {
+			    looking : false,
+			    moveForward : false,
+			    moveBackward : false,
+			    moveUp : false,
+			    moveDown : false,
+			    moveLeft : false,
+			    moveRight : false
+			};
+
+		handler.setInputAction(function(movement) {
+		    flags.looking = true;
+		    mousePosition = startMousePosition = Cesium.Cartesian3.clone(movement.position);
+		}, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+		handler.setInputAction(function(movement) {
+		    mousePosition = movement.endPosition;
+		}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+		handler.setInputAction(function(position) {
+		    flags.looking = false;
+		}, Cesium.ScreenSpaceEventType.LEFT_UP);
+
+		function getFlagForKeyCode(keyCode) {
+		    switch (keyCode) {
+		    case 'W'.charCodeAt(0):
+		        return 'moveForward';
+		    case 'S'.charCodeAt(0):
+		        return 'moveBackward';
+		    case 'Q'.charCodeAt(0):
+		        return 'moveUp';
+		    case 'E'.charCodeAt(0):
+		        return 'moveDown';
+		    case 'D'.charCodeAt(0):
+		        return 'moveRight';
+		    case 'A'.charCodeAt(0):
+		        return 'moveLeft';
+		    default:
+		        return undefined;
+		    }
+		}
+
+		document.addEventListener('keydown', function(e) {
+		    var flagName = getFlagForKeyCode(e.keyCode);
+		    if (typeof flagName !== 'undefined') {
+		        flags[flagName] = true;
+		    }
+		}, false);
+
+		document.addEventListener('keyup', function(e) {
+		    var flagName = getFlagForKeyCode(e.keyCode);
+		    if (typeof flagName !== 'undefined') {
+		        flags[flagName] = false;
+		    }
+		}, false);
+
+		viewer.clock.onTick.addEventListener(function(clock) {
+		    var camera = viewer.camera;
+
+		    if (flags.looking) {
+		        var width = canvas.clientWidth;
+		        var height = canvas.clientHeight;
+
+		        // Coordinate (0.0, 0.0) will be where the mouse was clicked.
+		        var x = (mousePosition.x - startMousePosition.x) / width;
+		        var y = -(mousePosition.y - startMousePosition.y) / height;
+
+		        var lookFactor = 0.05;
+		        camera.lookRight(x * lookFactor);
+		        camera.lookUp(y * lookFactor);
+		    }
+
+		    // Change movement speed based on the distance of the camera to the surface of the ellipsoid.
+		    var cameraHeight = ellipsoid.cartesianToCartographic(camera.position).height;
+		    var moveRate = cameraHeight / 10.0;
+
+		    
+		    
+		    if (flags.moveForward) {
+		        camera.moveForward(moveRate);
+		    }
+		    if (flags.moveBackward) {
+		        camera.moveBackward(moveRate);
+		    }
+		    if (flags.moveUp) {
+		        camera.moveUp(moveRate);
+		    }
+		    if (flags.moveDown) {
+		        camera.moveDown(moveRate);
+		    }
+		    if (flags.moveLeft) {
+		        camera.moveLeft(moveRate);
+		    }
+		    if (flags.moveRight) {
+		        camera.moveRight(moveRate);
+		    }});
+	</script>
+</body>
+</html>
