@@ -1,4 +1,4 @@
-﻿<!DOCTYPE>
+<!DOCTYPE>
 <html>
 <head>
 <!-- Use correct character set. -->
@@ -16,7 +16,81 @@
 
 <script>
 google.charts.load('current', {'packages':['bar']});
+google.charts.load('current', {
+		'packages' : [ 'gauge' ]
+	});
 var flag;	// 4층, 5층 띄워져있는지 true, false
+
+function drawChart2() {
+
+		var data1 = google.visualization.arrayToDataTable([
+				[ 'Label', 'Value' ], [ '에어컨 설정 온도', 15 ] ]);
+
+		var options1 = {
+			width : 130,
+			height : 120,
+			min : 0,
+			max : 40,
+			greenFrom : 0,
+			greenTo : 15,
+			yellowFrom : 15,
+			yellowTo : 30,
+			redFrom : 30,
+			redTo : 40,
+			minorTicks : 5
+		};
+
+		var data2 = google.visualization.arrayToDataTable([
+			[ 'Label', 'Value' ],  [ '온도', 20 ]]);
+		var options2 = {
+				width : 130,
+				height : 120,
+				min : 0,
+				max : 40,
+				greenFrom : 0,
+				greenTo : 15,
+				yellowFrom : 15,
+				yellowTo : 30,
+				redFrom : 30,
+				redTo : 40,
+				minorTicks : 5
+		};
+		
+		var data3 = google.visualization.arrayToDataTable([
+			[ 'Label', 'Value' ],[ '전기 사용량', 220 ] ]);
+		
+		var options3 = {
+				width : 130,
+				height : 120,
+				min : 0,
+				max : 400,
+				greenFrom : 0,
+				greenTo : 150,
+				yellowFrom : 150,
+				yellowTo : 300,
+				redFrom : 300,
+				redTo : 400,
+				minorTicks : 5
+			};
+
+		var chart1 = new google.visualization.Gauge(document.getElementById("graph1"));
+		var chart2 = new google.visualization.Gauge(document.getElementById("graph2"));
+		var chart3 = new google.visualization.Gauge(document.getElementById("graph3"));
+
+		chart1.draw(data1, options1);
+		chart2.draw(data2, options2);
+		chart3.draw(data3, options3);
+
+		setInterval(function() {
+			data1.setValue(0, 1,  Math.round(40 * Math.random()));
+			data2.setValue(0, 1,  Math.round(40 * Math.random()));
+			data3.setValue(0, 1, Math.round(400 * Math.random()));
+			chart1.draw(data1, options1);
+			chart2.draw(data2, options2);
+			chart3.draw(data3, options3);
+		}, 5000);
+	}
+
 	  function drawChart(id,value) {
 		  
 		  var d=[['계절', '최소', '최대']];
@@ -37,77 +111,45 @@ var flag;	// 4층, 5층 띄워져있는지 true, false
 
 	        chart.draw(data, google.charts.Bar.convertOptions(options));
 	      }
+		  
+		     google.charts.load('current', {'packages':['gauge']});
 
-
-   google.charts.load('current', {'packages':['gauge']});
-	   function drawChart2(id) {
-
-	        var data = google.visualization.arrayToDataTable([
-	          ['Label', 'Value'],
-	          ['Memory', 80],
-	          ['CPU', 55],
-	          ['Network', 68]
-	        ]);
-
-	        var options = {
-	          width: 400, height: 120,
-	          greenFrom:50, greenTo:75,
-	          yellowFrom:75, yellowTo: 90,
-	          redFrom: 90, redTo: 200,
-	          minorTicks: 5
-	        };
-
-	        var chart = new google.visualization.Gauge(document.getElementById(id));
-
-	        chart.draw(data, options);
-
-	        setInterval(function() {
-	          data.setValue(0, 1, 140 + Math.round(60 * Math.random()));
-	          chart.draw(data, options);
-	        }, 13000);
-	        setInterval(function() {
-	          data.setValue(1, 1, 140 + Math.round(60 * Math.random()));
-	          chart.draw(data, options);
-	        }, 5000);
-	        setInterval(function() {
-	          data.setValue(2, 1, 160 + Math.round(20 * Math.random()));
-	          chart.draw(data, options);
-	        }, 26000);
-	      }
-
-var value = [ [ ] ,
-	["공간정보기술(1층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 196, 241], ["여름", 221, 314] , ["가을", 206, 225 ], ["겨울", 214, 310] ]],
-	["공간정보기술(2층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 183, 250], ["여름", 218, 330] , ["가을", 192, 244 ], ["겨울", 199, 285] ]],
-	["공간정보기술(3층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",300,[["봄", 169, 224], ["여름", 236, 33] , ["가을", 198, 221  ], ["겨울",192, 287] ]],
-	["공간정보기술(4층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",400,[["봄", 185, 227], ["여름", 231, 302] , ["가을", 204, 223 ], ["겨울", 185, 302] ]],
-	["공간정보기술(5층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["공간정보기술(6층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",0,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["건물 A","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["건물 B","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["건물 C","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",300,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["건물 D","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]],
-	["건물 E","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ]]
-	
-	
+	//input data
+	var value = [ [ ] ,
+	["공간정보기술(1층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 196, 241], ["여름", 221, 314] , ["가을", 206, 225 ], ["겨울", 214, 310] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["공간정보기술(2층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",200,[["봄", 183, 250], ["여름", 218, 330] , ["가을", 192, 244 ], ["겨울", 199, 285] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["공간정보기술(3층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 169, 224], ["여름", 236, 33] , ["가을", 198, 221  ], ["겨울",192, 287] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["공간정보기술(4층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",400,[["봄", 185, 227], ["여름", 231, 302] , ["가을", 204, 223 ], ["겨울", 185, 302] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["공간정보기술(5층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",100,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["공간정보기술(6층)","성남시 수정구 판교동", "031-622-3800", "http://www.git.co.kr/",0,[["봄", 198, 253], ["여름", 228, 324] , ["가을", 208, 274 ], ["겨울", 207, 289] ], "http://nyulangone.org/files/science-building-artists-rendering.jpg"],
+	["NHN","성남시 수정구 판교동", "031-524-2000", "http://www.nhncorp.com/",100,[["봄", 225, 242], ["여름", 300, 356] , ["가을", 198, 270 ], ["겨울", 215, 350] ], "http://img.asiatoday.co.kr/file/2013y/08m/25d/857870_0-550767_34374.jpg"],
+	["TMAX","성남시 수정구 판교동", "031-222-9856", "http://www.tmax.com/",300,[["봄", 228, 273], ["여름", 218, 314] , ["가을", 195, 220 ], ["겨울", 237, 329] ], "http://cfile28.uf.tistory.com/image/2447644C592159A7134C1F"],
+	["SK","성남시 수정구 판교동", "031-822-1200", "http://www.tworld.co.kr/",400,[["봄", 198, 263], ["여름", 228, 294] , ["가을", 208, 274 ], ["겨울", 207, 289] ], "http://img.etnews.com/photonews/1111/209161_20111116145738_356_0001.jpg"],
+	["NEXON","성남시 수정구 판교동", "031-625-1100", "http://www.nexon.com/",300,[["봄", 223, 273], ["여름", 244, 284] , ["가을", 208, 273 ], ["겨울", 295, 400] ], "http://post.phinf.naver.net/MjAxNzAzMDJfNjIg/MDAxNDg4NDM1MTU5MzY0.D27dBa61fqIy0fqhdXpZ7_PKL40jpZ131ezJibinJxAg.TwhvnnnVYHDsIzzBsn85E1qQW6Zm4fw-95NLvUDUJoMg.JPEG/20170227_161310.jpg?type=w1200"],
+	["KAKAO","성남시 수정구 판교동", "031-626-5400", "http://www.kakao.com/",100,[["봄", 195, 283], ["여름", 254, 304] , ["가을", 194, 256 ], ["겨울", 207, 289] ], "http://cfile236.uf.daum.net/image/14294E194CD4E5341BA385"]
 	];
 
-function cameraMove() {
-	viewer.camera.flyTo({
-      destination : Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 550.0),
-	  //orientation : Cesium.HeadingPitchRoll.fromDegrees(32.27879878293835,-28.34390550872461,0.0716951918898415),
-      duration : 1.0
-    }); 
+	//camera conf
+	function cameraMove() {
+		viewer.camera.flyTo({
+			destination : new Cesium.Cartesian3(-3060444.0315897865, 4046286.283336617, 3852781.409429993),
+			orientation: {
+				heading: 2.1253926096523523,
+				pitch: -0.23863027805874482,
+				roll: 0.0032024666577115113 },
+			endTransform: Cesium.Matrix4.IDENTITY,
+			duration : 1.0
+		}); 
 	};
 	
+	// floor moving
 	function hideFloor() {
-		if (!flag)
-		{
+		if (!flag){
 			model[4].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
 				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 40.0));
 			model[5].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
 				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 40.0));
-		}
-		else {
+		}else{
 			model[4].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
 				Cesium.Cartesian3.fromDegrees(127.108212, 37.396960, 0.0));
 			model[5].modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
@@ -116,49 +158,51 @@ function cameraMove() {
 		flag = !flag;
 	}
 	
+	
+	//hide info-data
 	function hideBar() {
-		document.getElementById('controlPanel').style.visibility = 'hidden';
-	}
-	function hideBar2() {
 		document.getElementById('full').style.visibility = 'hidden';
 	}
-	function showBar() {
-		document.getElementById('controlPanel').style.visibility = 'visible';
-	}
 	
+	//show info-data
 	function showBar2(value) {
 		document.getElementById('full').style.visibility = 'visible';
-		//document.getElementById('name').innerHTML=value[0];
-		//document.getElementById('addr').innerHTML=value[1];
 		document.getElementById('information').style.visibility = 'visible';
 		$("#name").html(value[0]);
 		$("#address").html(value[1]);
 		$("#contact").html(value[2]);
 		$("#site").html(value[3]);
 		$("#usage").html(value[4]);
-		   drawChart("graph2", value[5]);
-		   drawChart2("graph1");
+		$("#logo").attr('src',value[6]);
+		drawChart("graph4", value[5]);
+		drawChart2();
 	}
 	
-	 function ColorByUsage() {
-    for(i=1;i<=11;i++){
-	 model[i-1].color = getColor(viewModel.color, viewModel.alpha,value[i][4]);
-      model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
-      model[i-1].colorBlendAmount = parseFloat(viewModel.colorBlendAmount);
-      model[i-1].silhouetteColor = getColor(viewModel.silhouetteColor, viewModel.silhouetteAlpha,value[i][4]);
-    }
-  }
-
-  function ori() {
-    for(i=1;i<=11;i++){
-      model[i-1].color = getColor(viewModel.color, viewModel.alpha,0);
-      model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
-      model[i-1].colorBlendAmount = 0.5;
-      model[i-1].silhouetteColor = getColor(viewModel.color, viewModel.alpha,0);
-    }
-  }
+	function deleteBar() {
+		document.getElementById('full').style.visibility = 'hidden';
+		document.getElementById('information').style.visibility = 'hidden'
+	}
 	
+	//change color
+	function ColorByUsage() {
+		for(i=1;i<=11;i++){
+			model[i-1].color = getColor(viewModel.color, viewModel.alpha,value[i][4]);
+			model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
+			model[i-1].colorBlendAmount = parseFloat(viewModel.colorBlendAmount);
+			model[i-1].silhouetteColor = getColor(viewModel.silhouetteColor, viewModel.silhouetteAlpha,value[i][4]);
+		}
+	}
+	//change ori-color
+	function ori() {
+		for(i=1;i<=11;i++){
+			model[i-1].color = getColor(viewModel.color, viewModel.alpha,0);
+			model[i-1].colorBlendMode = getColorBlendMode(viewModel.colorBlendMode);
+			model[i-1].colorBlendAmount = 0.5;
+			model[i-1].silhouetteColor = getColor(viewModel.color, viewModel.alpha,0);
+		}
+	}
 </script>
+
 <style>
 #icon {
 	padding-top: 0px;
@@ -166,6 +210,7 @@ function cameraMove() {
 	width: 21px;
 }
 </style>
+
 <style>
 @import url(../Build/Cesium/Widgets/widgets.css);
 
@@ -176,7 +221,6 @@ function cameraMove() {
 	padding: 0;
 	overflow: hidden;
 	margin-top: 55px;
-
 }
 
 #controlPanel {
@@ -198,9 +242,9 @@ function cameraMove() {
 	padding: 5px 8px;
 	border-radius: 5px;
 }
-
 </style>
 </head>
+
 
 <body>
 	<header class="navbar navbar-bright navbar-fixed-top" role="banner">
@@ -210,57 +254,51 @@ function cameraMove() {
 				<div class="navbar-header">
 					<a class="navbar-brand" href="#"> <img id="icon" alt="Brand"
 						src="../favicon.ico">
-					</a> <a id="brand" class="navbar-brand" href="#">Smart Building
-						Management</a>
+					</a> <a id="brand" class="navbar-brand" href="#">Smart Building Management</a>
 				</div>
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
 	</header>
 
- <div id="cesiumContainer" class = "fullSize"></div>
+	<div id="cesiumContainer" class = "fullSize"></div>
 
-  <div id="controlPanel">
-  This is a floating control panel<br/>
-  with a translucent background color.
-  <p>
-  <label>
-  <input id="skyCheckbox" type="checkbox" checked />
-  <span>Enable atmospheric effect</span>
-  </label><br/>
-  <button class="cesium-button" onclick="cameraMove()">fly to building</button>
-  <button class="cesium-button" onclick="hideFloor()">floor moving</button>
-  <button class="cesium-button" onclick="ColorByUsage()">Color By Usage</button>
-  <button class="cesium-button" onclick="ori()">Original</button>
- 
+	<div id="controlPanel">	This is a floating control panel<br/>with a translucent background color.
+		<p>
+			<label>
+				<input id="skyCheckbox" type="checkbox" checked />
+				<span>Enable atmospheric effect</span>
+			</label>
+			<br/>
+			<button class="cesium-button" onclick="cameraMove()">fly to building</button>
+			<button class="cesium-button" onclick="hideFloor()">floor moving</button>
+			<button class="cesium-button" onclick="ColorByUsage()">Color By Usage</button>
+			<button class="cesium-button" onclick="ori()">Original</button>
+		</p>
+	</div>
   
-  </p>
-  
-  
-  
-  </div>
-  
-  
-  
-  <div id="full">  
-		<div id="graph1" style="width: 400px; height: 120px;"></div>
-		<div id="graph2" style="width: 400px; height: 300px;"></div>
-      <div id="information">
-      <img alt="img" src="http://nyulangone.org/files/science-building-artists-rendering.jpg"  style="width:150px; height:150px; float:right;"></img>
-  건물명(층) : <span id="name"> </span>
-  <br>
-  주소: <span id="address"> </span> 
-  <br>
-  연락처: <span id="contact"> </span> 
-  <br>
-  홈페이지: <a href="#" id="site"> </a> 
-  <br>
-  사용량: <span id="usage"> </span> 
-  </div>
-  </div>
+    <div id="full">
+		<div style="width: 400px; height: 120px; text-align: -webkit-center;">
+			<!-- <div id="graph1"
+				style="width: 400px; height: 120px; text-align: -webkit-center;"></div>
+			<div id="graph4" style="width: 400px; height: 300px;"></div>
+			<div id="graph3" style="width: 400px; height: 300px;"></div> -->
+			<div id="graph1" class="col-md-4"></div>
+			<div id="graph2" class="col-md-4"></div>
+			<div id="graph3" class="col-md-4"></div>
+		</div>
+		<div id="graph4" style="width: 400px; height: 300px;"></div>
+		<div id="information">
+			<img alt="img" id="logo"
+				style="width: 150px; height: 150px; float: right;"></img> 건물명(층) : <span
+				id="name"> </span> <br> 주소: <span id="address"> </span> <br>
+			연락처: <span id="contact"> </span> <br> 홈페이지: <a href="#"
+				id="site"> </a> <br> 사용량: <span id="usage"> </span>
+		</div>
+	</div>
     
 	<script>
-	var obj;
+	
 		var viewer = new Cesium.Viewer('cesiumContainer');
 		var scene = viewer.scene;
 
@@ -270,42 +308,47 @@ function cameraMove() {
 		var model = {};
 		flag = false;
 		
-		 function getColorBlendMode(colorBlendMode) {
-        return Cesium.ColorBlendMode[colorBlendMode.toUpperCase()];
-    }
+		// getColorBlendMode
+		function getColorBlendMode(colorBlendMode) {
+			return Cesium.ColorBlendMode[colorBlendMode.toUpperCase()];
+		}
 
-    function getColor(colorName, alpha, value) {
+		// getColor
+		function getColor(colorName, alpha, value) {
 
-      var color ;
-      if(value == 0){
-        color = Cesium.Color["WHITE"];
-      }else if(value <= 100){
-        color = Cesium.Color["YELLOW"];
-      }else if(value <=200){
-        color = Cesium.Color["RED"];
-      }else if(value <=300){
-         color = Cesium.Color["BLUE"];
-      }else if(value <=400){
-        color = Cesium.Color["GREEN"];
-      }
-        return Cesium.Color.fromAlpha(color, parseFloat(alpha));
-    }
+			var color ;
+		
+			if(value == 0){
+				color = Cesium.Color["WHITE"];
+			}else if(value <= 150){
+				//color = Cesium.Color["YELLOW"];
+				color = Cesium.Color.LIME;
+			}else if(value <=300){
+				color = Cesium.Color.ORANGE;
+			}else if(value <=450){
+				color = Cesium.Color.RED;
+			}
+			return Cesium.Color.fromAlpha(color, parseFloat(alpha));
+		}
 
-    // The viewModel tracks the state of our mini application.
-    var viewModel = {
-
-        color : 'Green',//default
-        colors : ['White', 'Red', 'Green', 'Blue', 'Yellow', 'Gray'],
-        alpha : 1.0,
-        colorBlendMode : 'Highlight',
-        colorBlendModes : ['Highlight', 'Replace', 'Mix'],
-        colorBlendAmount : 0.5,
-        colorBlendAmountEnabled : false,
-        silhouetteColor : 'Red',//defalut
-        silhouetteColors : ['Red', 'Green', 'Blue', 'Yellow', 'Gray'],
-        silhouetteAlpha : 1.0,
-        silhouetteSize : 2.0
-    };
+		// The viewModel tracks the state of our mini application.
+		// default value of color attribute 
+		var viewModel = {
+			color : 'Green',//default
+			colors : ['White', 'Red', 'Green', 'Blue', 'Yellow', 'Gray'],
+			alpha : 1.0,
+			colorBlendMode : 'Highlight',
+			colorBlendModes : ['Highlight', 'Replace', 'Mix'],
+			colorBlendAmount : 0.5,
+			colorBlendAmountEnabled : false,
+			silhouetteColor : 'Red',//defalut
+			silhouetteColors : ['Red', 'Green', 'Blue', 'Yellow', 'Gray'],
+			silhouetteAlpha : 1.0,
+			silhouetteSize : 2.0
+		};
+		
+		
+		//Read data and set id
 		
 		for (i=1; i<=11; i++) {
 			addr = "../Source/Features/" + i + '.glb';
@@ -317,70 +360,57 @@ function cameraMove() {
 				id:idx,
 		
 			}));
-			
 		}
-		hideBar2();
+		
+		hideBar();
 
+		//click event
 		handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-				handler.setInputAction(function(click) {
-					var pickedObject = viewer.scene.pick(click.position);
-					console.log("click " + pickedObject.id + value[9][4]);
-					showBar2(value[pickedObject.id]);
-					
-			
-				}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+		
+		handler.setInputAction(function(click) {
+			var pickedObject = viewer.scene.pick(click.position);
+			if(pickedObject!=undefined){
+				showBar2(value[pickedObject.id]);
+			}else{
+				deleteBar();
+			}
+		}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 				
-				
-		////
+	
+		//mousehover event panel
 		var nameOverlay = document.createElement('div');
-    viewer.container.appendChild(nameOverlay);
-    nameOverlay.className = 'backdrop';
-    nameOverlay.style.display = 'none';
-    nameOverlay.style.position = 'absolute';
-    nameOverlay.style.bottom = '0';
-    nameOverlay.style.left = '0';
-    nameOverlay.style['pointer-events'] = 'none';
-    nameOverlay.style.padding = '4px';
-    nameOverlay.style.backgroundColor = 'white';
+		viewer.container.appendChild(nameOverlay);
+		nameOverlay.className = 'backdrop';
+		nameOverlay.style.display = 'none';
+		nameOverlay.style.position = 'absolute';
+		nameOverlay.style.bottom = '0';
+		nameOverlay.style.left = '0';
+		nameOverlay.style['pointer-events'] = 'none';
+		nameOverlay.style.padding = '4px';
+		nameOverlay.style.backgroundColor = 'white';
+	
+		viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(movement) {
+		// If a feature was previously highlighted, undo the highlight
+		if (Cesium.defined(highlighted.feature)) {
+			highlighted.feature.color = highlighted.originalColor;
+			highlighted.feature = undefined;
+		}
 
+		// Pick a new feature
+		var pickedFeature = viewer.scene.pick(movement.endPosition);
+		if (pickedFeature==undefined) {
+			nameOverlay.style.display = 'none';
+			return;
+		}
 
-    // Information about the currently selected feature
-    var selected = {
-        feature: undefined,
-        originalColor: new Cesium.Color()
-    };
+		// A feature was picked, so show it's overlay content
+		nameOverlay.style.display = 'block';
+		nameOverlay.style.bottom = viewer.canvas.clientHeight - movement.endPosition.y + 'px';
+		nameOverlay.style.left = movement.endPosition.x + 'px';
+		nameOverlay.textContent = value[pickedFeature.id][0];
+	}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-    // Information about the currently highlighted feature
-    var highlighted = {
-        feature: undefined,
-        originalColor: new Cesium.Color()
-    };
-var selectedEntity = new Cesium.Entity();
-
-viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(movement) {
-// If a feature was previously highlighted, undo the highlight
-if (Cesium.defined(highlighted.feature)) {
-    highlighted.feature.color = highlighted.originalColor;
-    highlighted.feature = undefined;
-}
-
-// Pick a new feature
-var pickedFeature = viewer.scene.pick(movement.endPosition);
-if (pickedFeature==undefined) {
-    nameOverlay.style.display = 'none';
-    return;
-}
-
-// A feature was picked, so show it's overlay content
-nameOverlay.style.display = 'block';
-nameOverlay.style.bottom = viewer.canvas.clientHeight - movement.endPosition.y + 'px';
-nameOverlay.style.left = movement.endPosition.x + 'px';
-nameOverlay.textContent = value[pickedFeature.id][0];
-
-}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-
-////move keyboard
-
+		//move keyboard
 		var canvas = viewer.canvas;
 		canvas.setAttribute('tabindex', '0'); // needed to put focus on the canvas
 		var ellipsoid = scene.globe.ellipsoid;
@@ -461,10 +491,8 @@ nameOverlay.textContent = value[pickedFeature.id][0];
 		    // Change movement speed based on the distance of the camera to the surface of the ellipsoid.
 		    var cameraHeight = ellipsoid.cartesianToCartographic(camera.position).height;
 		    var moveRate = cameraHeight / 10.0;
-
-		    
-		    
-		    if (flags.moveForward) {
+			
+			if (flags.moveForward) {
 		        camera.moveForward(moveRate);
 		    }
 		    if (flags.moveBackward) {
